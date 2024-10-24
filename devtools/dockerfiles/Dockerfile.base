@@ -1,0 +1,10 @@
+FROM python:3.11-alpine
+ENV PYTHONUBUFFERED=1
+
+COPY ./devtools/requirements /requirements
+
+RUN apk add musl-dev build-base postgresql-client apache2 apache2-dev && \
+    pip install -r /requirements/requirements.txt && \
+    adduser -D app
+
+EXPOSE 8080

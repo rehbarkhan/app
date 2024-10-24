@@ -1,0 +1,19 @@
+services:
+  saas_app:
+    container_name: saas
+    build:
+      context: .
+      dockerfile: ./devtools/dockerfiles/Dockerfile.app
+      args:
+        - BASE_IMAGE:saas:v1
+    ports:
+      - 8080:8080
+    command: sh -c "mod_wsgi-express start-server core/wsgi.py --port=8080 --reload-on-changes --log-to-terminal"
+    
+    volumes:
+      - .:/home/app/src
+    networks:
+      - localnet
+
+networks:
+  localnet:
